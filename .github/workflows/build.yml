@@ -1,0 +1,207 @@
+name: Build APK
+on:
+  push:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.9"
+      - name: Generate Android project
+        run: |
+          mkdir -p p/app/src/main/java/ir/pooban/ridercall p/app/src/main/res/mipmap p/app/src/main/res/drawable
+          cd p
+          echo "iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAIAAADdvvtQAAADSklEQVR42u3dMXLbQBBEUXCKjmkGPKROpGs6d+LAVVJKmwSw0/N+rGC38bd3AVDk5XZ/bMD/UiIAgUAgEAgEAggEAoFAIBBAIBAIBAKBAAKBQCAQCAQQCAQCgUAgEAggEAgEAoFAAIFAIBAIBAIIBAKBQCAQQCC8h6sIvvj18eP5P/75+Vti27Zdxn7J5j/pQikC7SINmUYIdJg3A00KF+hEdYZolCnQIt5MMClNoGXVSdUoR6AW6uRpVOwx5tENFHAZWldRsccsJjZQhjoBVVTsMa9ZAqXa03R2nbawbHWabmfFHvPNF2iaPY1mXXI092SBJtvTIoGSHYcyBWJPizRKXhwacRsPDaR+ApMpGXEoRyD2tEvJGQgpAqmfjlmVRDhkC8NsgdRP39xKChyyhWGqQOqne4YaCG0FUj8BSWogEAgDBbJ/ZeSpgdBQIPUTk6oGAoEwSiD7V1K2GggEAoFAIAegiccgDQQC4Twyf7Fw2S8YzNvBr9Q5fnhJGhV7jLONQLuuvF5XZdfRHtlwIQ3UcU37uSdXgkNu4zFcoO6LuPv4NRAIhPNo/CAx5mlK66eLGggjBUp6mNt6RiVr87KFgUAgEAgELCxQ6uF38mFcA4FAOI/rzGnv9N5g4B6tgUAgzBHIjVhYwhoIBAKBQCDHoHEHIA0EAmGgQHaxmFQ1EHoKpIQy8mzZQC++Ct3vP7CWHRiB3pb13hdp2YEFCmQXC0iy8eeB/i7Z57M7bIkvO7DALez1pfNk+sdfpMMGdm6RJ3wicdkVPOFr+c8/RDsJtU6vpMCeibfxsIUpoYTESiLssYWBQEqoZ0olHfakbWEcapSMMxASBVJCXTIpebEndgvj0Po5lOwkEH6InuzQ+nMvOZr1iNv4aQ51me/ldn/0Sjb+Y369lkrJ1+xmCbT5tR5bmO0sZkmU3M1ibgN1r6KABRDyNr7jlcioz5AG6lVFSTcBaQItrlHe/WOmQKuZFPzsKlyg0zWKfwMzQqDjTZrz5m6WQLvKNPMjA3MFelEpn3QjEN6Af+sBgUAgEAgEAggEAoFAIBBAIBAIBAKBAAKBQCAQCAQQCAQCgUAgEAggEAgEAoFAAIFAIBAIBAIIBAKBQCAQ8M0f9nUdFr6Qe78AAAAASUVORK5CYII=" | base64 -d > app/src/main/res/mipmap/ic_launcher.png
+          echo "iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAIAAADdvvtQAAADSklEQVR42u3dMXLbQBBEUXCKjmkGPKROpGs6d+LAVVJKmwSw0/N+rGC38bd3AVDk5XZ/bMD/UiIAgUAgEAgEAggEAoFAIBBAIBAIBAKBAAKBQCAQCAQQCAQCgUAgEAggEAgEAoFAAIFAIBAIBAIIBAKBQCAQQCC8h6sIvvj18eP5P/75+Vti27Zdxn7J5j/pQikC7SINmUYIdJg3A00KF+hEdYZolCnQIt5MMClNoGXVSdUoR6AW6uRpVOwx5tENFHAZWldRsccsJjZQhjoBVVTsMa9ZAqXa03R2nbawbHWabmfFHvPNF2iaPY1mXXI092SBJtvTIoGSHYcyBWJPizRKXhwacRsPDaR+ApMpGXEoRyD2tEvJGQgpAqmfjlmVRDhkC8NsgdRP39xKChyyhWGqQOqne4YaCG0FUj8BSWogEAgDBbJ/ZeSpgdBQIPUTk6oGAoEwSiD7V1K2GggEAoFAIAegiccgDQQC4Twyf7Fw2S8YzNvBr9Q5fnhJGhV7jLONQLuuvF5XZdfRHtlwIQ3UcU37uSdXgkNu4zFcoO6LuPv4NRAIhPNo/CAx5mlK66eLGggjBUp6mNt6RiVr87KFgUAgEAgELCxQ6uF38mFcA4FAOI/rzGnv9N5g4B6tgUAgzBHIjVhYwhoIBAKBQCDHoHEHIA0EAmGgQHaxmFQ1EHoKpIQy8mzZQC++Ct3vP7CWHRiB3pb13hdp2YEFCmQXC0iy8eeB/i7Z57M7bIkvO7DALez1pfNk+sdfpMMGdm6RJ3wicdkVPOFr+c8/RDsJtU6vpMCeibfxsIUpoYTESiLssYWBQEqoZ0olHfakbWEcapSMMxASBVJCXTIpebEndgvj0Po5lOwkEH6InuzQ+nMvOZr1iNv4aQ51me/ldn/0Sjb+Y369lkrJ1+xmCbT5tR5bmO0sZkmU3M1ibgN1r6KABRDyNr7jlcioz5AG6lVFSTcBaQItrlHe/WOmQKuZFPzsKlyg0zWKfwMzQqDjTZrz5m6WQLvKNPMjA3MFelEpn3QjEN6Af+sBgUAgEAgEAggEAoFAIBBAIBAIBAKBAAKBQCAQCAQQCAQCgUAgEAggEAgEAoFAAIFAIBAIBAIIBAKBQCAQ8M0f9nUdFr6Qe78AAAAASUVORK5CYII=" | base64 -d > app/src/main/res/drawable/ic_stat.png
+          cat > settings.gradle <<'EOF'
+          pluginManagement { repositories { google(); mavenCentral(); gradlePluginPortal() } }
+          dependencyResolutionManagement { repositories { google(); mavenCentral() } }
+          rootProject.name = "RiderCall"
+          include ":app"
+          EOF
+          cat > build.gradle <<'EOF'
+          plugins { id "com.android.application" version "8.5.2" apply false }
+          EOF
+          cat > gradle.properties <<'EOF'
+          org.gradle.jvmargs=-Xmx2g
+          android.useAndroidX=true
+          EOF
+          cat > app/build.gradle <<'EOF'
+          plugins { id "com.android.application" }
+          android {
+            namespace "ir.pooban.ridercall"
+            compileSdk 34
+            defaultConfig {
+              applicationId "ir.pooban.ridercall"
+              minSdk 27
+              targetSdk 34
+              versionCode 1
+              versionName "1.0"
+            }
+            compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+          }
+          EOF
+          cat > app/src/main/AndroidManifest.xml <<'EOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+            <uses-permission android:name="android.permission.INTERNET"/>
+            <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+            <uses-permission android:name="android.permission.CAMERA"/>
+            <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+            <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+            <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+            <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE"/>
+            <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
+            <uses-permission android:name="android.permission.WAKE_LOCK"/>
+            <uses-permission android:name="android.permission.VIBRATE"/>
+            <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
+            <application android:label="Rider Call" android:icon="@mipmap/ic_launcher" android:usesCleartextTraffic="false" android:hardwareAccelerated="true">
+              <activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTask"
+                  android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
+                  android:theme="@android:style/Theme.Material.NoActionBar">
+                <intent-filter>
+                  <action android:name="android.intent.action.MAIN"/>
+                  <category android:name="android.intent.category.LAUNCHER"/>
+                </intent-filter>
+              </activity>
+              <service android:name=".KeepAliveService" android:exported="false" android:foregroundServiceType="specialUse">
+                <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE" android:value="Keeps the intercom connection open to receive incoming calls"/>
+              </service>
+            </application>
+          </manifest>
+          EOF
+          cat > app/src/main/java/ir/pooban/ridercall/KeepAliveService.java <<'EOF'
+          package ir.pooban.ridercall;
+          import android.app.*;
+          import android.content.Intent;
+          import android.content.pm.ServiceInfo;
+          import android.os.*;
+          public class KeepAliveService extends Service {
+            private PowerManager.WakeLock wl;
+            @Override public void onCreate() {
+              super.onCreate();
+              NotificationManager nm = getSystemService(NotificationManager.class);
+              nm.createNotificationChannel(new NotificationChannel("keep", "Connection", NotificationManager.IMPORTANCE_LOW));
+              PendingIntent pi = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), PendingIntent.FLAG_IMMUTABLE);
+              Notification n = new Notification.Builder(this, "keep").setSmallIcon(R.drawable.ic_stat)
+                .setContentTitle("Rider Call").setContentText("آماده‌ی دریافت تماس").setContentIntent(pi).setOngoing(true).build();
+              if (Build.VERSION.SDK_INT >= 34) startForeground(1, n, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE);
+              else startForeground(1, n);
+              wl = ((PowerManager) getSystemService(POWER_SERVICE)).newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "ridercall:keep");
+              wl.acquire();
+            }
+            @Override public int onStartCommand(Intent i, int f, int id) { return START_STICKY; }
+            @Override public void onDestroy() { if (wl != null && wl.isHeld()) wl.release(); super.onDestroy(); }
+            @Override public IBinder onBind(Intent i) { return null; }
+          }
+          EOF
+          cat > app/src/main/java/ir/pooban/ridercall/MainActivity.java <<'EOF'
+          package ir.pooban.ridercall;
+          import android.Manifest;
+          import android.annotation.SuppressLint;
+          import android.app.*;
+          import android.content.Intent;
+          import android.content.pm.PackageManager;
+          import android.media.AudioAttributes;
+          import android.media.RingtoneManager;
+          import android.net.Uri;
+          import android.os.*;
+          import android.provider.Settings;
+          import android.view.WindowManager;
+          import android.webkit.*;
+          import java.util.ArrayList;
+          public class MainActivity extends Activity {
+            static final String URL = "https://app.pooban.ir/";
+            private WebView web;
+            private NotificationManager nm;
+            @SuppressLint({"SetJavaScriptEnabled", "JavascriptInterface"})
+            @Override protected void onCreate(Bundle b) {
+              super.onCreate(b);
+              nm = getSystemService(NotificationManager.class);
+              NotificationChannel ch = new NotificationChannel("calls", "Incoming calls", NotificationManager.IMPORTANCE_HIGH);
+              ch.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE),
+                new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_NOTIFICATION_RINGTONE).build());
+              ch.enableVibration(true);
+              nm.createNotificationChannel(ch);
+              setShowWhenLocked(true);
+              setTurnScreenOn(true);
+              getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+              web = new WebView(this);
+              setContentView(web);
+              WebSettings s = web.getSettings();
+              s.setJavaScriptEnabled(true);
+              s.setDomStorageEnabled(true);
+              s.setDatabaseEnabled(true);
+              s.setMediaPlaybackRequiresUserGesture(false);
+              s.setCacheMode(WebSettings.LOAD_DEFAULT);
+              web.addJavascriptInterface(new Bridge(), "RiderNative");
+              web.setWebChromeClient(new WebChromeClient() {
+                @Override public void onPermissionRequest(final PermissionRequest r) {
+                  runOnUiThread(() -> r.grant(r.getResources()));
+                }
+              });
+              web.setWebViewClient(new WebViewClient() {
+                @Override public void onReceivedError(WebView v, WebResourceRequest req, WebResourceError err) {
+                  if (req.isForMainFrame()) v.loadDataWithBaseURL(null,
+                    "<html dir=rtl><body style='background:#0f1115;color:#eee;font-family:sans-serif;text-align:center;padding-top:40%'>"
+                    + "<h3>اتصال به سرور برقرار نشد</h3><p>اینترنت را بررسی کنید.</p>"
+                    + "<button style='font-size:18px;padding:12px 24px' onclick=\"location.href='" + URL + "'\">تلاش دوباره</button></body></html>",
+                    "text/html", "utf-8", null);
+                }
+              });
+              askPermissions();
+              try { startForegroundService(new Intent(this, KeepAliveService.class)); } catch (Exception e) {}
+              web.loadUrl(URL);
+            }
+            private void askPermissions() {
+              ArrayList<String> p = new ArrayList<>();
+              p.add(Manifest.permission.RECORD_AUDIO);
+              p.add(Manifest.permission.CAMERA);
+              if (Build.VERSION.SDK_INT >= 33) p.add(Manifest.permission.POST_NOTIFICATIONS);
+              ArrayList<String> need = new ArrayList<>();
+              for (String x : p) if (checkSelfPermission(x) != PackageManager.PERMISSION_GRANTED) need.add(x);
+              if (!need.isEmpty()) requestPermissions(need.toArray(new String[0]), 1);
+              PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
+              if (!pm.isIgnoringBatteryOptimizations(getPackageName())) {
+                try { startActivity(new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS, Uri.parse("package:" + getPackageName()))); } catch (Exception e) {}
+              }
+            }
+            @Override public void onBackPressed() {
+              if (web.canGoBack()) web.goBack(); else moveTaskToBack(true);
+            }
+            class Bridge {
+              @JavascriptInterface public void incoming(String name, boolean video) {
+                Intent i = new Intent(MainActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                PendingIntent pi = PendingIntent.getActivity(MainActivity.this, 1, i, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+                Notification n = new Notification.Builder(MainActivity.this, "calls").setSmallIcon(R.drawable.ic_stat)
+                  .setContentTitle(name).setContentText(video ? "تماس تصویری ورودی" : "تماس صوتی ورودی")
+                  .setCategory(Notification.CATEGORY_CALL).setFullScreenIntent(pi, true).setContentIntent(pi)
+                  .setOngoing(true).setAutoCancel(true).build();
+                nm.notify(2, n);
+                try { startActivity(i); } catch (Exception e) {}
+              }
+              @JavascriptInterface public void cancel() { nm.cancel(2); }
+            }
+          }
+          EOF
+      - name: Build
+        run: cd p && gradle --no-daemon assembleDebug
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cp p/app/build/outputs/apk/debug/app-debug.apk rider-call.apk
+          gh release delete latest -y --cleanup-tag -R "$GITHUB_REPOSITORY" || true
+          gh release create latest rider-call.apk -R "$GITHUB_REPOSITORY" --title "Rider Call" --notes "Latest build" --target "$GITHUB_SHA"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rider-call-apk
+          path: rider-call.apk
